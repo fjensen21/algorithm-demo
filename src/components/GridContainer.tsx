@@ -5,22 +5,23 @@ import Grid from "@/components/Grid";
 const ROWS = 40;
 const COLS = 50;
 
-const generateGrid = (rows: number, cols: number) => {
+export type Grid = [number, number][];
+
+function generateGrid(rows: number, cols: number): Grid {
   const grid = [];
 
   for (let row = 0; row < rows; row++) {
-    const gridRow: number[] = [];
+    const gridRow = [];
     for (let col = 0; col < cols; col++) {
       gridRow.push(0);
     }
     grid.push(gridRow);
   }
-  console.log(grid);
   return grid;
 };
 
 export default function GridContainer() {
-  const [grid, setGrid] = useState(null);
+  const [grid, setGrid] = useState<Grid | null>(null);
 
   useEffect(() => setGrid(generateGrid(ROWS, COLS)), []);
 
