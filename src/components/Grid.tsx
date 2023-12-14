@@ -5,7 +5,7 @@ interface BoxProps {
 }
 
 interface GridProps {
-    grid: Grid
+    grid: Grid | null
 }
 
 
