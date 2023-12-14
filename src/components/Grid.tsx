@@ -10,7 +10,10 @@ interface GridProps {
 
 
 const Box: React.FC<BoxProps> = ({ selected }) => {
-  return <div className={`w-4 h-4 bg-${selected ? "black" : "white"}`} />;
+    if(selected) {
+        return <div className="w-4 h-4 bg-black" />;
+    }
+  return <div className="w-4 h-4 bg-white" />;
 };
 
 const Grid: React.FC<GridProps> = ({ grid }) => {
@@ -27,7 +30,7 @@ const Grid: React.FC<GridProps> = ({ grid }) => {
   };
 
   if (grid) {
-    return <div className="grid grid-cols-50 gap-1">{generateBoxes(grid)}</div>;
+    return <div className="grid grid-cols-50 gap-1 outline bg-gray-300">{generateBoxes(grid)}</div>;
   } else {
     return <h1>Loading Grid...</h1>;
   }
