@@ -2,7 +2,7 @@ type Action = "down" | "flat" | "up";
 
 class Grid {
   public readonly rows = 30;
-  public readonly cols = 60;
+  public readonly cols = 70;
   public grid: number[][];
 
   constructor() {

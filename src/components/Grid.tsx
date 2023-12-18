@@ -20,7 +20,7 @@ const Box: React.FC<BoxProps> = ({ boxType }) => {
 
 const Grid: React.FC<GridProps> = ({ arrayData }) => {
   return (
-    <div>
+    <div className="max-w-full overflow-auto whitespace-nowrap">
       {arrayData.map((row: BoxTypes[], rowIndex: number) => (
         <div key={rowIndex} className="block">
           {row.map((item: BoxTypes, colIndex: number) => (
