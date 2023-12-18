@@ -1,13 +1,12 @@
+import Grid from "@/lib/grid";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const problemSpace = [
-    [1, 1, 1, 1, 1],
-    [2, 2, 2, 2, 2],
-  ];
+  const problemSpace = new Grid();
+  problemSpace.generateProblemSpace();
   let json_response = {
     status: "success",
-    grid: problemSpace,
-  }
-  return NextResponse.json(json_response)
+    grid: problemSpace.grid,
+  };
+  return NextResponse.json(json_response);
 }
