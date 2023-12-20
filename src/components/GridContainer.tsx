@@ -82,8 +82,12 @@ const GridContainer: React.FC = () => {
       <div className="flex items-center my-4">
         <form action={handleSolveProblem}>
           <select className="mx-4">
-            {availableAlgorithms.map((val) => {
-              return <option value={val}>{val}</option>;
+            {availableAlgorithms.map((val, index) => {
+              return (
+                <option key={index} value={val}>
+                  {val}
+                </option>
+              );
             })}
           </select>
           <button
