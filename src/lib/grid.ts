@@ -1,8 +1,8 @@
 type Action = "down" | "flat" | "up";
 
 class Grid {
-  public readonly rows = 30;
-  public readonly cols = 70;
+  public readonly rows = 10;
+  public readonly cols = 10;
   public grid: number[][];
 
   constructor() {
@@ -77,11 +77,11 @@ class Grid {
 
   getNextRow(action: Action, currentRow: number): number {
     if (action === "down") {
-      return currentRow - 1;
+      return currentRow + 1;
     } else if (action === "flat") {
       return currentRow;
     } else {
-      return currentRow + 1;
+      return currentRow - 1;
     }
   }
 
@@ -98,22 +98,23 @@ class Grid {
     */
     let newGrid = this.getEmptyGrid();
     let currentCol = 0;
-    let currentRow = Math.floor(Math.random() * newGrid.length);
+    let currentRow = Math.floor(Math.random() * (newGrid.length - 2)) + 1;
 
     let probabilities = [0.33, 0.33, 0.33];
     let lastAction: Action = "flat";
 
-    while (currentCol < this.grid[0].length) {
+    while (currentCol < newGrid[0].length) {
+      console.log(`Col: ${currentCol}, Row: ${currentRow}`);
       newGrid[currentRow][currentCol] = 1;
       currentCol++;
 
       // Select next action and update row
 
       if (currentRow <= 1) {
-        probabilities[0] = 0;
+        probabilities[2] = 0;
         probabilities = this.maskProbabilities("down", probabilities);
       } else if (currentRow >= newGrid.length - 2) {
-        probabilities[2] = 0;
+        probabilities[0] = 0;
         probabilities = this.maskProbabilities("up", probabilities);
       } else {
         probabilities = this.maskProbabilities(lastAction, probabilities);
