@@ -86,7 +86,15 @@ class Grid {
   }
 
   getEmptyGrid(): number[][] {
-    return this.grid.slice();
+    let grid = [];
+    for (let row = 0; row < this.rows; row++) {
+      let gridRow = [];
+      for (let col = 0; col < this.cols; col++) {
+        gridRow.push(0);
+      }
+      grid.push(gridRow);
+    }
+    return grid;
   }
 
   generateProblemSpace() {

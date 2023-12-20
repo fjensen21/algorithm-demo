@@ -45,3 +45,15 @@ describe("Normalize probabilities", () => {
     ]);
   });
 });
+
+describe("Get empty grid generates the proper grid", () => {
+  test("Generates grid matching col and rows", () => {
+    const testGrid = new Grid();
+    const emptyGrid = new Grid().getEmptyGrid();
+
+    if (testGrid.cols > 0 && testGrid.rows > 0) {
+      expect(emptyGrid.length).toBe(testGrid.rows);
+      expect(emptyGrid[0].length).toBe(testGrid.cols);
+    }
+  });
+});
