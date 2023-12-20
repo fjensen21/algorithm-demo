@@ -22,6 +22,11 @@ const GridContainer: React.FC = () => {
     [0, 0, 0, 0],
   ]);
 
+  const [availableAlgorithms, setAvailableAlgorithms] = useState<string[]>([
+    "Algorithm 1",
+    "Algorithm2",
+  ]);
+
   const handleGenerateProblemSpace = () => {
     const fetchAndSetData = async () => {
       try {
@@ -35,6 +40,10 @@ const GridContainer: React.FC = () => {
     fetchAndSetData();
   };
 
+  const handleSolveProblem = () => {
+    console.log("Problem solved...");
+  };
+
   return (
     <div className="container mx-auto m-4">
       <Grid arrayData={gridArray} />
@@ -44,6 +53,21 @@ const GridContainer: React.FC = () => {
       >
         Generate Random Problem Space
       </button>
+      <div className="flex items-center my-4">
+        <form action={handleSolveProblem}>
+          <select className="mx-4">
+            {availableAlgorithms.map((val) => {
+              return <option value={val}>{val}</option>;
+            })}
+          </select>
+          <button
+            type="submit"
+            className="outline bg-gray-300 rounded-lg p-2 hover:bg-slate-200"
+          >
+            Run Solver
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
