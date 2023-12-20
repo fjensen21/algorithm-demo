@@ -43,7 +43,7 @@ const GridContainer: React.FC = () => {
 
   const [availableAlgorithms, setAvailableAlgorithms] = useState<string[]>([
     "Algorithm 1",
-    "Algorithm2",
+    "Algorithm 2",
   ]);
 
   const handleGenerateProblemSpace = () => {
