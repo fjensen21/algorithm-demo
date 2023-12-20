@@ -14,6 +14,25 @@ async function getNewProblemSpace() {
   }
 }
 
+async function solveProblem(grid: BoxTypes[][], algorithm: string) {
+  try {
+    const res = await fetch("/api/solveproblem", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ grid, algorithm }),
+    });
+
+    const data = await res.json();
+    console.log(data.moveHistory);
+    console.log(data.performance);
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+}
+
 const GridContainer: React.FC = () => {
   const [gridArray, setGridArray] = useState<BoxTypes[][]>([
     [0, 0, 0, 0],
@@ -41,7 +60,14 @@ const GridContainer: React.FC = () => {
   };
 
   const handleSolveProblem = () => {
-    console.log("Problem solved...");
+    solveProblem(
+      [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+      ],
+      "algorithm1"
+    );
   };
 
   return (
