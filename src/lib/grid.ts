@@ -33,13 +33,25 @@ class Grid {
     return probabilities;
   }
 
+  /**
+   * Normalizes probabilities to be between 0 and 1 when given a list of probabilities
+   *
+   * @param probabilities
+   * @returns
+   */
   normalizeProbabilities(probabilities: number[]): number[] {
     const sum = probabilities.reduce((acc, val) => acc + val, 0);
     return probabilities.map((prob) => prob / sum);
   }
 
+  /**
+   * Pick a random action given the probabilities of each action
+   *
+   * @param {number[]} probabilities
+   * @returns {Action} The chosen action
+   */
   getRandomAction(probabilities: number[]): Action {
-    const actions: Action[] = ["down", "flat", "up"];
+    let actions: Action[] = ["down", "flat", "up"];
     if (actions.length != probabilities.length) {
       throw new Error(
         "Number of probabilities must match number of available actions"
@@ -53,6 +65,7 @@ class Grid {
     let cumulativeProbability = 0;
 
     for (let i = 0; i < normalizedProbabilities.length; i++) {
+      if (normalizedProbabilities[i] == 0) continue;
       cumulativeProbability += normalizedProbabilities[i];
       if (randomValue <= cumulativeProbability) {
         return actions[i];

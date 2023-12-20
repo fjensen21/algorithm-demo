@@ -29,3 +29,19 @@ describe("Mask probabilities", () => {
     ]);
   });
 });
+
+describe("Normalize probabilities", () => {
+  test("List of 3 non-zero probabilities", () => {
+    const testGrid = new Grid();
+    expect(testGrid.normalizeProbabilities([1, 8, 1])).toStrictEqual([
+      0.1, 0.8, 0.1,
+    ]);
+  });
+
+  test("List of 3 probabilities with a 0", () => {
+    const testGrid = new Grid();
+    expect(testGrid.normalizeProbabilities([1, 9, 0])).toStrictEqual([
+      0.1, 0.9, 0.0,
+    ]);
+  });
+});
