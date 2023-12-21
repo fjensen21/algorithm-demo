@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
 
   const dummyResponse = {
     moveHistory: dummyHistory,
-    performance: dummyPerformance,
+    performanceData: dummyPerformance,
   };
 
   return NextResponse.json(dummyResponse);

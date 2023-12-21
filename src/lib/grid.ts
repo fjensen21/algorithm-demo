@@ -1,8 +1,8 @@
 type Action = "down" | "flat" | "up";
 
 class Grid {
-  public readonly rows = 10;
-  public readonly cols = 10;
+  public readonly rows = 30;
+  public readonly cols = 70;
   public grid: number[][];
 
   constructor() {
@@ -112,7 +112,6 @@ class Grid {
     let lastAction: Action = "flat";
 
     while (currentCol < newGrid[0].length) {
-      console.log(`Col: ${currentCol}, Row: ${currentRow}`);
       newGrid[currentRow][currentCol] = 1;
       currentCol++;
 

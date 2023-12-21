@@ -1,37 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import PerformanceData from "./PerformanceData";
 import Grid, { BoxTypes } from "@/components/Grid";
-
-async function getNewProblemSpace() {
-  try {
-    const res = await fetch("/api/generateproblemspace");
-    const data = await res.json();
-
-    return data.grid;
-  } catch (error) {
-    console.error("Error fetching data", error);
-    throw error;
-  }
-}
-
-async function solveProblem(grid: BoxTypes[][], algorithm: string) {
-  try {
-    const res = await fetch("/api/solveproblem", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ grid, algorithm }),
-    });
-
-    const data = await res.json();
-    console.log(data.moveHistory);
-    console.log(data.performance);
-  } catch (error) {
-    console.error("Error fetching data", error);
-    throw error;
-  }
-}
+import { solveProblem, getNewProblemSpace } from "@/services/gridApiServices";
+import type { FormEvent } from "react";
 
 const GridContainer: React.FC = () => {
   const [gridArray, setGridArray] = useState<BoxTypes[][]>([
@@ -41,10 +13,29 @@ const GridContainer: React.FC = () => {
     [0, 0, 0, 0],
   ]);
 
+  const [running, setRunning] = useState(false);
+
   const [availableAlgorithms, setAvailableAlgorithms] = useState<string[]>([
     "Algorithm 1",
     "Algorithm 2",
   ]);
+
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>(
+    availableAlgorithms[0]
+  );
+
+  const [performance, setPerformance] = useState(null);
+
+  const displayMoveHistory = async (moveHistory: BoxTypes[][][]) => {
+    for (let i = 0; i < moveHistory.length; i++) {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          setGridArray(moveHistory[i]);
+          resolve();
+        }, i * 200);
+      });
+    }
+  };
 
   const handleGenerateProblemSpace = () => {
     const fetchAndSetData = async () => {
@@ -59,15 +50,25 @@ const GridContainer: React.FC = () => {
     fetchAndSetData();
   };
 
-  const handleSolveProblem = () => {
-    solveProblem(
-      [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-      ],
-      "algorithm1"
-    );
+  useEffect(() => {
+    handleGenerateProblemSpace();
+  }, []);
+
+  const handleRunSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setRunning(true);
+    console.log("Go time!");
+    try {
+      const data = await solveProblem(gridArray, selectedAlgorithm);
+      const { moveHistory, performanceData } = data;
+      setPerformance(performanceData);
+      await displayMoveHistory(moveHistory);
+    } catch (error) {
+      console.error("Error fetching data", error);
+      throw error;
+    } finally {
+      setRunning(false);
+    }
   };
 
   return (
@@ -76,12 +77,17 @@ const GridContainer: React.FC = () => {
       <button
         onClick={handleGenerateProblemSpace}
         className="outline bg-gray-300 rounded-lg p-2 hover:bg-slate-200"
+        disabled={running}
       >
-        Generate Random Problem Space
+        Generate New Problem Space
       </button>
       <div className="flex items-center my-4">
-        <form action={handleSolveProblem}>
-          <select className="mx-4">
+        <form onSubmit={handleRunSubmit}>
+          <select
+            className="mx-4"
+            value={selectedAlgorithm}
+            onChange={(e) => setSelectedAlgorithm(e.target.value)}
+          >
             {availableAlgorithms.map((val, index) => {
               return (
                 <option key={index} value={val}>
@@ -93,11 +99,14 @@ const GridContainer: React.FC = () => {
           <button
             type="submit"
             className="outline bg-gray-300 rounded-lg p-2 hover:bg-slate-200"
+            disabled={running}
           >
             Run Solver
           </button>
         </form>
       </div>
+      <h1>Selected: {selectedAlgorithm}</h1>
+      {performance && <PerformanceData statistics={performance} />}
     </div>
   );
 };
