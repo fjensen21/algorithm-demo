@@ -4,7 +4,7 @@ import PerformanceData from "./PerformanceData";
 import Grid from "@/components/Grid";
 import { solveProblem, getNewProblemSpace } from "@/services/gridApiServices";
 import type { FormEvent } from "react";
-import { GridSquare } from "../../types/types";
+import { GridSquare } from "../types/types";
 
 const GridContainer: React.FC = () => {
   const [gridArray, setGridArray] = useState<GridSquare[][]>([

@@ -1,5 +1,5 @@
 import React from "react";
-import { GridSquare } from "../../types/types";
+import { GridSquare } from "../types/types";
 
 interface GridProps {
   arrayData: GridSquare[][];

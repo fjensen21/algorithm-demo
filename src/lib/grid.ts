@@ -1,4 +1,4 @@
-import { GridSquare } from "../../types/types";
+import { GridSquare } from "../types/types";
 type Action = "down" | "flat" | "up";
 
 class Grid {

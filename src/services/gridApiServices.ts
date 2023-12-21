@@ -1,4 +1,4 @@
-import { GridSquare } from "../../types/types";
+import { GridSquare } from "../types/types";
 
 export async function getNewProblemSpace() {
   try {
