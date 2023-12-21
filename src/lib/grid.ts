@@ -1,14 +1,15 @@
+import { GridSquare } from "../../typings/types";
 type Action = "down" | "flat" | "up";
 
 class Grid {
   public readonly rows = 30;
   public readonly cols = 70;
-  public grid: number[][];
+  public grid: GridSquare[][];
 
   constructor() {
-    let grid = [];
+    let grid: GridSquare[][] = [];
     for (let row = 0; row < this.rows; row++) {
-      let gridRow = [];
+      let gridRow: GridSquare[] = [];
       for (let col = 0; col < this.cols; col++) {
         gridRow.push(0);
       }
@@ -85,10 +86,10 @@ class Grid {
     }
   }
 
-  getEmptyGrid(): number[][] {
-    let grid = [];
+  getEmptyGrid(): GridSquare[][] {
+    let grid: GridSquare[][] = [];
     for (let row = 0; row < this.rows; row++) {
-      let gridRow = [];
+      let gridRow: GridSquare[] = [];
       for (let col = 0; col < this.cols; col++) {
         gridRow.push(0);
       }

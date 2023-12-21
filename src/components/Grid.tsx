@@ -1,12 +1,11 @@
 import React from "react";
-
-export type BoxTypes = 0 | 1 | 2;
+import { GridSquare } from "../../typings/types";
 
 interface GridProps {
-  arrayData: BoxTypes[][];
+  arrayData: GridSquare[][];
 }
 interface BoxProps {
-  boxType: BoxTypes;
+  boxType: GridSquare;
 }
 
 const Box: React.FC<BoxProps> = ({ boxType }) => {
@@ -21,9 +20,9 @@ const Box: React.FC<BoxProps> = ({ boxType }) => {
 const Grid: React.FC<GridProps> = ({ arrayData }) => {
   return (
     <div className="max-w-full overflow-auto whitespace-nowrap">
-      {arrayData.map((row: BoxTypes[], rowIndex: number) => (
+      {arrayData.map((row: GridSquare[], rowIndex: number) => (
         <div key={rowIndex} className="block">
-          {row.map((item: BoxTypes, colIndex: number) => (
+          {row.map((item: GridSquare, colIndex: number) => (
             <Box key={colIndex} boxType={item} />
           ))}
         </div>

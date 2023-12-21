@@ -1,0 +1,1 @@
+export type GridSquare = 0 | 1 | 2;

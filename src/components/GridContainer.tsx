@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import PerformanceData from "./PerformanceData";
-import Grid, { BoxTypes } from "@/components/Grid";
+import Grid from "@/components/Grid";
 import { solveProblem, getNewProblemSpace } from "@/services/gridApiServices";
 import type { FormEvent } from "react";
+import { GridSquare } from "../../typings/types";
 
 const GridContainer: React.FC = () => {
-  const [gridArray, setGridArray] = useState<BoxTypes[][]>([
+  const [gridArray, setGridArray] = useState<GridSquare[][]>([
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -26,7 +27,7 @@ const GridContainer: React.FC = () => {
 
   const [performance, setPerformance] = useState(null);
 
-  const displayMoveHistory = async (moveHistory: BoxTypes[][][]) => {
+  const displayMoveHistory = async (moveHistory: GridSquare[][][]) => {
     for (let i = 0; i < moveHistory.length; i++) {
       await new Promise<void>((resolve) => {
         setTimeout(() => {

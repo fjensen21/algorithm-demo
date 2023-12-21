@@ -1,4 +1,4 @@
-import { BoxTypes } from "@/components/Grid";
+import { GridSquare } from "../../typings/types";
 
 export async function getNewProblemSpace() {
   try {
@@ -12,7 +12,7 @@ export async function getNewProblemSpace() {
   }
 }
 
-export async function solveProblem(grid: BoxTypes[][], algorithm: string) {
+export async function solveProblem(grid: GridSquare[][], algorithm: string) {
   try {
     const res = await fetch("/api/solveproblem", {
       method: "POST",
