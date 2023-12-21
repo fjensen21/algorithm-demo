@@ -1,3 +1,4 @@
+import { GridSquare } from "@/types/types";
 export interface OptimizationStrategy {
-  optimize(problemSpace: any): any;
+  optimize(problemSpace: GridSquare[][]): any;
 }
