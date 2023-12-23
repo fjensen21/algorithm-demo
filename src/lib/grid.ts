@@ -2,24 +2,24 @@ import { GridSquare } from "../types/types";
 type Action = "down" | "flat" | "up";
 
 class Grid {
-  public readonly defaultRows = 30;
-  public readonly defaultCols = 70;
+  public static readonly defaultRows = 30;
+  public static readonly defaultCols = 70;
   public grid: GridSquare[][];
 
   constructor(inputGrid: GridSquare[][]) {
-    if (inputGrid) {
-      this.grid = inputGrid;
-    } else {
-      let grid: GridSquare[][] = [];
-      for (let row = 0; row < this.defaultRows; row++) {
-        let gridRow: GridSquare[] = [];
-        for (let col = 0; col < this.defaultCols; col++) {
-          gridRow.push(0);
-        }
-        grid.push(gridRow);
-      }
-      this.grid = grid;
-    }
+    // if (inputGrid) {
+    this.grid = inputGrid;
+    // } else {
+    //   let grid: GridSquare[][] = [];
+    //   for (let row = 0; row < this.defaultRows; row++) {
+    //     let gridRow: GridSquare[] = [];
+    //     for (let col = 0; col < this.defaultCols; col++) {
+    //       gridRow.push(0);
+    //     }
+    //     grid.push(gridRow);
+    //   }
+    //   this.grid = grid;
+    // }
   }
 
   maskProbabilities(preferredAction: Action, probabilities: number[]) {
@@ -90,11 +90,14 @@ class Grid {
     }
   }
 
-  getEmptyGrid(): GridSquare[][] {
+  static getEmptyGrid(
+    defaultRows: number,
+    defaultCols: number
+  ): GridSquare[][] {
     let grid: GridSquare[][] = [];
-    for (let row = 0; row < this.defaultRows; row++) {
+    for (let row = 0; row < defaultRows; row++) {
       let gridRow: GridSquare[] = [];
-      for (let col = 0; col < this.defaultCols; col++) {
+      for (let col = 0; col < defaultCols; col++) {
         gridRow.push(0);
       }
       grid.push(gridRow);
@@ -109,7 +112,7 @@ class Grid {
       select an action (up, down, flat)
       update probabilities based on last action and position
     */
-    let newGrid = this.getEmptyGrid();
+    let newGrid = Grid.getEmptyGrid(Grid.defaultRows, Grid.defaultCols);
     let currentCol = 0;
     let currentRow = Math.floor(Math.random() * (newGrid.length - 2)) + 1;
 
