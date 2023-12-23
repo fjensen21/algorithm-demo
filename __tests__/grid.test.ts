@@ -2,9 +2,11 @@ import Grid from "@/lib/grid";
 
 test("confirms shape of initialized grid matches default cols and rows", () => {
   const testGrid = new Grid();
-  expect(testGrid.grid.length).toBe(testGrid.rows);
-  expect(testGrid.grid[0].length).toBe(testGrid.cols);
-  expect(testGrid.grid[testGrid.rows - 1].length).toBe(testGrid.cols);
+  expect(testGrid.grid.length).toBe(testGrid.defaultRows);
+  expect(testGrid.grid[0].length).toBe(testGrid.defaultCols);
+  expect(testGrid.grid[testGrid.defaultRows - 1].length).toBe(
+    testGrid.defaultCols
+  );
 });
 
 describe("Mask probabilities", () => {
@@ -51,9 +53,9 @@ describe("Get empty grid generates the proper grid", () => {
     const testGrid = new Grid();
     const emptyGrid = new Grid().getEmptyGrid();
 
-    if (testGrid.cols > 0 && testGrid.rows > 0) {
-      expect(emptyGrid.length).toBe(testGrid.rows);
-      expect(emptyGrid[0].length).toBe(testGrid.cols);
+    if (testGrid.defaultCols > 0 && testGrid.defaultRows > 0) {
+      expect(emptyGrid.length).toBe(testGrid.defaultRows);
+      expect(emptyGrid[0].length).toBe(testGrid.defaultCols);
     }
   });
 });

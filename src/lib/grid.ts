@@ -2,20 +2,24 @@ import { GridSquare } from "../types/types";
 type Action = "down" | "flat" | "up";
 
 class Grid {
-  public readonly rows = 30;
-  public readonly cols = 70;
+  public readonly defaultRows = 30;
+  public readonly defaultCols = 70;
   public grid: GridSquare[][];
 
-  constructor() {
-    let grid: GridSquare[][] = [];
-    for (let row = 0; row < this.rows; row++) {
-      let gridRow: GridSquare[] = [];
-      for (let col = 0; col < this.cols; col++) {
-        gridRow.push(0);
+  constructor(inputGrid: GridSquare[][]) {
+    if (inputGrid) {
+      this.grid = inputGrid;
+    } else {
+      let grid: GridSquare[][] = [];
+      for (let row = 0; row < this.defaultRows; row++) {
+        let gridRow: GridSquare[] = [];
+        for (let col = 0; col < this.defaultCols; col++) {
+          gridRow.push(0);
+        }
+        grid.push(gridRow);
       }
-      grid.push(gridRow);
+      this.grid = grid;
     }
-    this.grid = grid;
   }
 
   maskProbabilities(preferredAction: Action, probabilities: number[]) {
@@ -88,9 +92,9 @@ class Grid {
 
   getEmptyGrid(): GridSquare[][] {
     let grid: GridSquare[][] = [];
-    for (let row = 0; row < this.rows; row++) {
+    for (let row = 0; row < this.defaultRows; row++) {
       let gridRow: GridSquare[] = [];
-      for (let col = 0; col < this.cols; col++) {
+      for (let col = 0; col < this.defaultCols; col++) {
         gridRow.push(0);
       }
       grid.push(gridRow);
