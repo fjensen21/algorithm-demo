@@ -1,7 +1,7 @@
 import { GridSquare } from "@/types/types";
 import { OptimizationStrategy } from "./optimizationstrategy";
 
-class OptimizationContext {
+export default class OptimizationContext {
   private strategy: OptimizationStrategy;
 
   constructor(strategy: OptimizationStrategy) {

@@ -1,4 +1,4 @@
 import { GridSquare } from "@/types/types";
 export interface OptimizationStrategy {
-  optimize(problemSpace: GridSquare[][]): any;
+  optimize(problemSpace: GridSquare[][]): GridSquare[][][];
 }

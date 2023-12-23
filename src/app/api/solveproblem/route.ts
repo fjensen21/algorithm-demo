@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import OptimizationContext from "@/lib/optimization/optimizationcontext";
+import HillClimbing from "@/lib/optimization/algorithms/hillclimbing";
 
 export async function POST(request: NextRequest) {
   const { grid, algorithm } = await request.json();
@@ -17,23 +19,10 @@ export async function POST(request: NextRequest) {
 
   // Generate start point
 
-  const dummyHistory = [
-    [
-      [0, 0, 0],
-      [2, 1, 0],
-      [1, 0, 1],
-    ],
-    [
-      [0, 2, 0],
-      [0, 1, 0],
-      [1, 0, 1],
-    ],
-    [
-      [0, 0, 0],
-      [0, 1, 2],
-      [1, 0, 1],
-    ],
-  ];
+  const selectedAlgorithm = new HillClimbing();
+  const moveHistory = new OptimizationContext(
+    selectedAlgorithm
+  ).executeOptimizer(grid);
 
   const dummyPerformance = {
     elapsedTime: 15.03,
@@ -43,7 +32,7 @@ export async function POST(request: NextRequest) {
   };
 
   const dummyResponse = {
-    moveHistory: dummyHistory,
+    moveHistory: moveHistory,
     performanceData: dummyPerformance,
   };
 

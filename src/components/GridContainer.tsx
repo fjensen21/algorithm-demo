@@ -28,13 +28,11 @@ const GridContainer: React.FC = () => {
   const [performance, setPerformance] = useState(null);
 
   const displayMoveHistory = async (moveHistory: GridSquare[][][]) => {
+    const sleep = (delay: number) =>
+      new Promise((resolve) => setTimeout(resolve, delay));
     for (let i = 0; i < moveHistory.length; i++) {
-      await new Promise<void>((resolve) => {
-        setTimeout(() => {
-          setGridArray(moveHistory[i]);
-          resolve();
-        }, i * 200);
-      });
+      await sleep(200);
+      setGridArray(moveHistory[i]);
     }
   };
 
@@ -62,12 +60,16 @@ const GridContainer: React.FC = () => {
     try {
       const data = await solveProblem(gridArray, selectedAlgorithm);
       const { moveHistory, performanceData } = data;
-      setPerformance(performanceData);
+      console.log("Before await display");
+      console.log(moveHistory);
       await displayMoveHistory(moveHistory);
+      setPerformance(performanceData);
+      console.log("After await display");
     } catch (error) {
       console.error("Error fetching data", error);
       throw error;
     } finally {
+      console.log("running set to false");
       setRunning(false);
     }
   };
