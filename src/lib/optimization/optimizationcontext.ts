@@ -1,5 +1,6 @@
 import { GridSquare } from "@/types/types";
 import { OptimizationStrategy } from "./optimizationstrategy";
+import Grid from "../grid";
 
 export default class OptimizationContext {
   private strategy: OptimizationStrategy;
@@ -12,7 +13,7 @@ export default class OptimizationContext {
     this.strategy = strategy;
   }
 
-  executeOptimizer(problemSpace: GridSquare[][]): any {
+  executeOptimizer(problemSpace: Grid): any {
     return this.strategy.optimize(problemSpace);
   }
 }

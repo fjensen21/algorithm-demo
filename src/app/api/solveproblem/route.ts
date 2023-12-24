@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OptimizationContext from "@/lib/optimization/optimizationcontext";
 import HillClimbing from "@/lib/optimization/algorithms/hillclimbing";
+import Grid from "@/lib/grid";
 
 export async function POST(request: NextRequest) {
   const { grid, algorithm } = await request.json();
@@ -19,10 +20,13 @@ export async function POST(request: NextRequest) {
 
   // Generate start point
 
+  const gridClass = new Grid(grid);
+  gridClass.setAgentStartPosition(0);
+
   const selectedAlgorithm = new HillClimbing();
   const moveHistory = new OptimizationContext(
     selectedAlgorithm
-  ).executeOptimizer(grid);
+  ).executeOptimizer(gridClass);
 
   const dummyPerformance = {
     elapsedTime: 15.03,

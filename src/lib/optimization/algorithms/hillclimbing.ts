@@ -1,16 +1,31 @@
+import Grid from "@/lib/grid";
 import { OptimizationStrategy } from "../optimizationstrategy";
 import AlgorithmRegistry from "./algorithmregistry";
 import { GridSquare } from "@/types/types";
 
 export default class HillClimbing implements OptimizationStrategy {
-  optimize(problemSpace: GridSquare[][]): GridSquare[][][] {
+  optimize(problemSpace: Grid): GridSquare[][][] {
     const moveHistory: GridSquare[][][] = [];
 
-    for (let row = 0; row < problemSpace.length; row++) {
-      let newGrid = problemSpace.map((row) => row.slice());
-      newGrid[row][0] = 2;
-      moveHistory.push(newGrid);
+    const agentPosition = problemSpace.getAgentPosition();
+
+    if (agentPosition === null) {
+      throw Error(
+        "Agent must be initialized before runnning optimize function"
+      );
     }
+
+    let startCol = agentPosition.col;
+    const endCol = problemSpace.getBoundary("right");
+
+    moveHistory.push(problemSpace.grid.map((row) => row.slice()));
+
+    for (let i = startCol; i < endCol; i++) {
+      problemSpace.move("right");
+      let gridCopy = problemSpace.grid.map((row) => row.slice());
+      moveHistory.push(gridCopy);
+    }
+
     return moveHistory;
   }
 }
