@@ -1,25 +1,148 @@
 import { GridSquare } from "../types/types";
 type Action = "down" | "flat" | "up";
+type Direction = "right" | "left";
 
 class Grid {
   public static readonly defaultRows = 30;
   public static readonly defaultCols = 70;
   public grid: GridSquare[][];
+  private agentPosition: { row: number | null; col: number | null } = {
+    row: null,
+    col: null,
+  };
 
   constructor(inputGrid: GridSquare[][]) {
-    // if (inputGrid) {
     this.grid = inputGrid;
-    // } else {
-    //   let grid: GridSquare[][] = [];
-    //   for (let row = 0; row < this.defaultRows; row++) {
-    //     let gridRow: GridSquare[] = [];
-    //     for (let col = 0; col < this.defaultCols; col++) {
-    //       gridRow.push(0);
-    //     }
-    //     grid.push(gridRow);
-    //   }
-    //   this.grid = grid;
-    // }
+  }
+
+  /**
+   * Get the current coordinates for the agent
+   *
+   * @returns null if the agent hasn't been initialized and an object with row and col of the agent if it has
+   */
+  getAgentPosition(): { row: number; col: number } | null {
+    if (this.agentPosition.row === null || this.agentPosition.col === null) {
+      return null;
+    }
+    return {
+      row: this.agentPosition.row,
+      col: this.agentPosition.col,
+    };
+  }
+
+  /**
+   * Given a start col in range. Set the start position for the agent.
+   *
+   * @param col a start column (in grid range) for the agent
+   * @returns True if the position is set, false if a start position
+   * has already been initialized or the given column is outside
+   * of the grid range.
+   */
+  setAgentStartPosition(col: number): boolean {
+    if (this.getAgentPosition() !== null) {
+      return false;
+    }
+    if (col < 0 || col >= this.grid[0].length) {
+      return false;
+    }
+    for (let row = 0; row < this.grid.length; row++) {
+      if (this.grid[row][col] == 1) {
+        this.grid[row - 1][col] = 2;
+        this.updateAgentPosition(row - 1, col);
+        return true;
+      }
+    }
+    throw Error(
+      "Internal Class Error: No terrain block was found in the given column"
+    );
+  }
+
+  private updateAgentPosition(row: number, col: number) {
+    if (this.agentPosition.row === null || this.agentPosition.col === null) {
+      this.grid[row][col] = 2;
+      this.agentPosition.row = row;
+      this.agentPosition.col = col;
+      return;
+    }
+
+    const agentRow = this.agentPosition.row;
+    const agentCol = this.agentPosition.col;
+
+    this.grid[agentRow][agentCol] = 0;
+
+    this.grid[row][col] = 2;
+    this.agentPosition.row = row;
+    this.agentPosition.col = col;
+  }
+
+  /**
+   * Get the furthest valid row/col in any direction for the grid
+   *
+   * @param boundary the grid edge you want a position for
+   * @returns the furthest valid position for the specified boundary
+   */
+  getBoundary(boundary: "left" | "right" | "top" | "bottom"): number {
+    if (boundary === "left") {
+      return 0;
+    } else if (boundary === "right") {
+      return this.grid[0].length - 1;
+    } else if (boundary === "top") {
+      return 0;
+    } else if (boundary === "bottom") {
+      return this.grid.length - 1;
+    } else {
+      throw Error("Parameter must be a valid boundary string");
+    }
+  }
+
+  /**
+   * Move the agent one square to the left or right
+   *
+   * @param direction the direction you want to move the agent
+   */
+  move(direction: Direction) {
+    if (this.getAgentPosition() === null) {
+      throw Error("No agent has been initialized.");
+    }
+
+    // Check that we aren't at left or right boundary
+    if (
+      direction === "left" &&
+      this.getBoundary("left") === this.getAgentPosition()?.col
+    ) {
+      throw Error("Cannot move further to the left at boundary");
+    } else if (
+      direction === "right" &&
+      this.getBoundary("right") === this.getAgentPosition()?.col
+    ) {
+      throw Error("Cannot move further to the right at boundary");
+    }
+
+    let rowOffset = -2;
+    let endRowOffset = 0;
+
+    if (this.getAgentPosition()!.row === this.getBoundary("top")) {
+      endRowOffset--;
+    }
+
+    if (this.getAgentPosition()!.row === this.getBoundary("bottom")) {
+      rowOffset++;
+    }
+
+    let terrainCol =
+      direction === "right"
+        ? this.getAgentPosition()!.col + 1
+        : this.getAgentPosition()!.col - 1;
+
+    for (rowOffset; rowOffset <= endRowOffset; rowOffset++) {
+      const terrainRowToCheck = this.getAgentPosition()!.row - rowOffset;
+
+      if (this.grid[terrainRowToCheck][terrainCol] === 1) {
+        this.updateAgentPosition(terrainRowToCheck - 1, terrainCol);
+        return;
+      }
+    }
+    throw Error("Something unexpected happened agent position was not updated");
   }
 
   maskProbabilities(preferredAction: Action, probabilities: number[]) {

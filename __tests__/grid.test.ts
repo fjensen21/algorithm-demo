@@ -73,3 +73,200 @@ describe("Get empty grid generates the proper grid", () => {
     }
   });
 });
+
+describe("Get grid boundaries", () => {
+  const testGrid = new Grid([
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+  ]);
+  test("get left boundary", () => {
+    const boundary = testGrid.getBoundary("left");
+    expect(boundary).toBe(0);
+  });
+
+  test("get right boundary", () => {
+    const boundary = testGrid.getBoundary("right");
+    expect(boundary).toBe(2);
+  });
+
+  test("get top boundary", () => {
+    const boundary = testGrid.getBoundary("top");
+    expect(boundary).toBe(0);
+  });
+
+  test("get bottom boundary", () => {
+    const boundary = testGrid.getBoundary("bottom");
+    expect(boundary).toBe(2);
+  });
+});
+
+describe("Set and get agent start position", () => {
+  test("getAgentStartPosition returns null if no agent start position is set", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ]);
+
+    expect(testGrid.getAgentPosition()).toBe(null);
+  });
+  test("Sets correct start position given a valid column", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ]);
+
+    const startPositionSet = testGrid.setAgentStartPosition(1);
+    expect(startPositionSet).toBe(true);
+
+    const expectedGrid = [
+      [0, 2, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ];
+
+    console.log(testGrid.grid);
+
+    expect(testGrid.grid).toStrictEqual(expectedGrid);
+
+    const expectedAgentRow = 0;
+    const expectedAgentCol = 1;
+
+    const actualPosition = testGrid.getAgentPosition();
+    expect(actualPosition).not.toBe(null);
+    if (actualPosition) {
+      const { row, col } = actualPosition;
+      expect(row).toBe(expectedAgentRow);
+      expect(col).toBe(expectedAgentCol);
+    }
+  });
+  test("Returns false if a start position is already set", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ]);
+
+    const startPositionSet = testGrid.setAgentStartPosition(1);
+    expect(startPositionSet).toBe(true);
+
+    const newStartPositionSet = testGrid.setAgentStartPosition(2);
+    expect(newStartPositionSet).toBe(false);
+
+    const expectedGrid = [
+      [0, 2, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ];
+
+    expect(testGrid.grid).toStrictEqual(expectedGrid);
+  });
+});
+
+describe("Move function", () => {
+  test("Move right properly moves on flat terrain", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(1);
+    testGrid.move("right");
+
+    const expectedGrid = [
+      [0, 0, 2],
+      [1, 1, 1],
+      [0, 0, 0],
+    ];
+
+    expect(testGrid.grid).toStrictEqual(expectedGrid);
+  });
+
+  test("Move left properly moves on flat terrain", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(1);
+    testGrid.move("left");
+
+    const expectedGrid = [
+      [2, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ];
+
+    expect(testGrid.grid).toStrictEqual(expectedGrid);
+  });
+
+  test("Move right properly moves on down terrain", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [1, 1, 0],
+      [0, 0, 1],
+    ]);
+
+    testGrid.setAgentStartPosition(1);
+    testGrid.move("right");
+
+    const expectedGrid = [
+      [0, 0, 0],
+      [1, 1, 2],
+      [0, 0, 1],
+    ];
+
+    expect(testGrid.grid).toStrictEqual(expectedGrid);
+  });
+
+  test("Move left properly moves on down terrain", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [2, 1, 1],
+      [1, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(1);
+    testGrid.move("left");
+
+    const expectedGrid = [
+      [0, 0, 0],
+      [2, 1, 1],
+      [1, 0, 0],
+    ];
+
+    expect(testGrid.grid).toStrictEqual(expectedGrid);
+  });
+
+  test("Throws error on left boundary", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [1, 1, 0],
+      [0, 0, 1],
+    ]);
+
+    testGrid.setAgentStartPosition(0);
+
+    expect(() => testGrid.move("left")).toThrow(
+      "Cannot move further to the left at boundary"
+    );
+  });
+
+  test("Throws error on right boundary", () => {
+    const testGrid = new Grid([
+      [0, 0, 0],
+      [1, 1, 0],
+      [0, 0, 1],
+    ]);
+
+    testGrid.setAgentStartPosition(2);
+
+    expect(() => testGrid.move("right")).toThrow(
+      "Cannot move further to the right at boundary"
+    );
+  });
+});
