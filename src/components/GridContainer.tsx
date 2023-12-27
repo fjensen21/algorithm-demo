@@ -22,9 +22,7 @@ const GridContainer: React.FC = () => {
 
   const [availableAlgorithms, setAvailableAlgorithms] = useState<string[]>([]);
 
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>(
-    availableAlgorithms[0]
-  );
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>("");
 
   const [performance, setPerformance] = useState(null);
 
@@ -32,8 +30,9 @@ const GridContainer: React.FC = () => {
     try {
       const algorithms = await getAlgorithms();
       setAvailableAlgorithms(algorithms);
+      setSelectedAlgorithm(algorithms[0]);
     } catch (error) {
-      console.log("Error setting algorithms state:", error);
+      console.error("Error setting algorithms state:", error);
       throw error;
     }
   };
@@ -71,15 +70,12 @@ const GridContainer: React.FC = () => {
   const handleRunSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setRunning(true);
-    console.log("Go time!");
     try {
       const data = await solveProblem(gridArray, selectedAlgorithm);
       const { moveHistory, performanceData } = data;
-      console.log("Before await display");
       console.log(moveHistory);
       await displayMoveHistory(moveHistory);
       setPerformance(performanceData);
-      console.log("After await display");
     } catch (error) {
       console.error("Error fetching data", error);
       throw error;

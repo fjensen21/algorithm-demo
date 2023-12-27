@@ -18,7 +18,7 @@ export async function getAlgorithms() {
     const data = await res.json();
     return data.algorithms;
   } catch (error) {
-    console.log("Error fetching data", error);
+    console.error("Error fetching data", error);
     throw error;
   }
 }

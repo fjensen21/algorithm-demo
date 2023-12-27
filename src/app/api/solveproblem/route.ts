@@ -13,9 +13,7 @@ export async function POST(request: NextRequest) {
     };
     return Response.error;
   }
-
   // Generate start point
-
   const gridClass = new Grid(grid);
   gridClass.setAgentStartPosition(0);
 
