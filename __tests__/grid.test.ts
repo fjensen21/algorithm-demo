@@ -4,9 +4,11 @@ test("confirms shape of initialized grid matches default cols and rows", () => {
   const testGrid = new Grid(
     Grid.getEmptyGrid(Grid.defaultRows, Grid.defaultCols)
   );
-  expect(testGrid.grid.length).toBe(Grid.defaultRows);
-  expect(testGrid.grid[0].length).toBe(Grid.defaultCols);
-  expect(testGrid.grid[Grid.defaultRows - 1].length).toBe(Grid.defaultCols);
+  expect(testGrid.getGrid().length).toBe(Grid.defaultRows);
+  expect(testGrid.getGrid()[0].length).toBe(Grid.defaultCols);
+  expect(testGrid.getGrid()[Grid.defaultRows - 1].length).toBe(
+    Grid.defaultCols
+  );
 });
 
 describe("Mask probabilities", () => {
@@ -68,8 +70,8 @@ describe("Get empty grid generates the proper grid", () => {
     );
 
     if (Grid.defaultCols > 0 && Grid.defaultRows > 0) {
-      expect(emptyGrid.grid.length).toBe(Grid.defaultRows);
-      expect(emptyGrid.grid[0].length).toBe(Grid.defaultCols);
+      expect(emptyGrid.getGrid().length).toBe(Grid.defaultRows);
+      expect(emptyGrid.getGrid()[0].length).toBe(Grid.defaultCols);
     }
   });
 });
@@ -127,9 +129,7 @@ describe("Set and get agent start position", () => {
       [0, 0, 0],
     ];
 
-    console.log(testGrid.grid);
-
-    expect(testGrid.grid).toStrictEqual(expectedGrid);
+    expect(testGrid.getGrid()).toStrictEqual(expectedGrid);
 
     const expectedAgentRow = 0;
     const expectedAgentCol = 1;
@@ -161,7 +161,7 @@ describe("Set and get agent start position", () => {
       [0, 0, 0],
     ];
 
-    expect(testGrid.grid).toStrictEqual(expectedGrid);
+    expect(testGrid.getGrid()).toStrictEqual(expectedGrid);
   });
 });
 
@@ -182,7 +182,7 @@ describe("Move function", () => {
       [0, 0, 0],
     ];
 
-    expect(testGrid.grid).toStrictEqual(expectedGrid);
+    expect(testGrid.getGrid()).toStrictEqual(expectedGrid);
   });
 
   test("Move left properly moves on flat terrain", () => {
@@ -201,7 +201,7 @@ describe("Move function", () => {
       [0, 0, 0],
     ];
 
-    expect(testGrid.grid).toStrictEqual(expectedGrid);
+    expect(testGrid.getGrid()).toStrictEqual(expectedGrid);
   });
 
   test("Move right properly moves on down terrain", () => {
@@ -220,7 +220,7 @@ describe("Move function", () => {
       [0, 0, 1],
     ];
 
-    expect(testGrid.grid).toStrictEqual(expectedGrid);
+    expect(testGrid.getGrid()).toStrictEqual(expectedGrid);
   });
 
   test("Move left properly moves on down terrain", () => {
@@ -239,7 +239,7 @@ describe("Move function", () => {
       [1, 0, 0],
     ];
 
-    expect(testGrid.grid).toStrictEqual(expectedGrid);
+    expect(testGrid.getGrid()).toStrictEqual(expectedGrid);
   });
 
   test("Throws error on left boundary", () => {

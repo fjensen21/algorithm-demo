@@ -18,11 +18,11 @@ export default class HillClimbing implements OptimizationStrategy {
     let startCol = agentPosition.col;
     const endCol = problemSpace.getBoundary("right");
 
-    moveHistory.push(problemSpace.grid.map((row) => row.slice()));
+    moveHistory.push(problemSpace.getGrid());
 
     for (let i = startCol; i < endCol; i++) {
       problemSpace.move("right");
-      let gridCopy = problemSpace.grid.map((row) => row.slice());
+      let gridCopy = problemSpace.getGrid();
       moveHistory.push(gridCopy);
     }
 
