@@ -73,14 +73,12 @@ const GridContainer: React.FC = () => {
     try {
       const data = await solveProblem(gridArray, selectedAlgorithm);
       const { moveHistory, performanceData } = data;
-      console.log(moveHistory);
       await displayMoveHistory(moveHistory);
       setPerformance(performanceData);
     } catch (error) {
       console.error("Error fetching data", error);
       throw error;
     } finally {
-      console.log("running set to false");
       setRunning(false);
     }
   };
