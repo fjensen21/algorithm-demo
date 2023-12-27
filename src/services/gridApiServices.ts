@@ -12,6 +12,17 @@ export async function getNewProblemSpace() {
   }
 }
 
+export async function getAlgorithms() {
+  try {
+    const res = await fetch("/api/getalgorithms");
+    const data = await res.json();
+    return data.algorithms;
+  } catch (error) {
+    console.log("Error fetching data", error);
+    throw error;
+  }
+}
+
 export async function solveProblem(grid: GridSquare[][], algorithm: string) {
   try {
     const res = await fetch("/api/solveproblem", {

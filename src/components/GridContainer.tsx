@@ -2,7 +2,11 @@
 import { useState, useEffect } from "react";
 import PerformanceData from "./PerformanceData";
 import Grid from "@/components/Grid";
-import { solveProblem, getNewProblemSpace } from "@/services/gridApiServices";
+import {
+  solveProblem,
+  getNewProblemSpace,
+  getAlgorithms,
+} from "@/services/gridApiServices";
 import type { FormEvent } from "react";
 import { GridSquare } from "../types/types";
 
@@ -16,16 +20,27 @@ const GridContainer: React.FC = () => {
 
   const [running, setRunning] = useState(false);
 
-  const [availableAlgorithms, setAvailableAlgorithms] = useState<string[]>([
-    "Algorithm 1",
-    "Algorithm 2",
-  ]);
+  const [availableAlgorithms, setAvailableAlgorithms] = useState<string[]>([]);
 
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>(
     availableAlgorithms[0]
   );
 
   const [performance, setPerformance] = useState(null);
+
+  const fetchAlgorithmsList = async () => {
+    try {
+      const algorithms = await getAlgorithms();
+      setAvailableAlgorithms(algorithms);
+    } catch (error) {
+      console.log("Error setting algorithms state:", error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    fetchAlgorithmsList();
+  }, []);
 
   const displayMoveHistory = async (moveHistory: GridSquare[][][]) => {
     const sleep = (delay: number) =>
