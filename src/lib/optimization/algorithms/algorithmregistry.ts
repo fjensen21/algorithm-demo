@@ -1,5 +1,10 @@
 import HillClimbing from "./hillclimbing";
+import { OptimizationStrategy } from "../optimizationstrategy";
 
-export const algorithms = {
+interface AlgorithmRegistry {
+  [algorithm: string]: any;
+}
+
+export const algorithms: AlgorithmRegistry = {
   "hill-climbing": HillClimbing,
 };

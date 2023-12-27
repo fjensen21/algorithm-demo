@@ -2,9 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import OptimizationContext from "@/lib/optimization/optimizationcontext";
 import HillClimbing from "@/lib/optimization/algorithms/hillclimbing";
 import Grid from "@/lib/grid";
+import { algorithms } from "@/lib/optimization/algorithms/algorithmregistry";
+import { GridSquare } from "@/types/types";
+
+interface RequestPayload {
+  grid: GridSquare[][];
+  algorithm: string;
+}
 
 export async function POST(request: NextRequest) {
-  const { grid, algorithm } = await request.json();
+  const { grid, algorithm } = (await request.json()) as RequestPayload;
 
   if (!grid || !algorithm) {
     const responseInfo = {
@@ -17,7 +24,8 @@ export async function POST(request: NextRequest) {
   const gridClass = new Grid(grid);
   gridClass.setAgentStartPosition(0);
 
-  const selectedAlgorithm = new HillClimbing();
+  const selectedAlgorithm = new algorithms[algorithm]();
+
   const moveHistory = new OptimizationContext(
     selectedAlgorithm
   ).executeOptimizer(gridClass);
