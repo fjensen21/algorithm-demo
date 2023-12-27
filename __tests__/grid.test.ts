@@ -1,4 +1,5 @@
 import Grid from "@/lib/grid";
+import { GridSquare } from "@/types/types";
 
 test("confirms shape of initialized grid matches default cols and rows", () => {
   const testGrid = new Grid(
@@ -226,7 +227,7 @@ describe("Move function", () => {
   test("Move left properly moves on down terrain", () => {
     const testGrid = new Grid([
       [0, 0, 0],
-      [2, 1, 1],
+      [0, 1, 1],
       [1, 0, 0],
     ]);
 
@@ -268,5 +269,23 @@ describe("Move function", () => {
     expect(() => testGrid.move("right")).toThrow(
       "Cannot move further to the right at boundary"
     );
+  });
+});
+
+describe("Constructor behaves right", () => {
+  test("Any existing agents are cleared from grid arrays on construct", () => {
+    const gridArray: GridSquare[][] = [
+      [0, 2, 0],
+      [0, 0, 0],
+      [0, 2, 0],
+    ];
+    const testGrid = new Grid(gridArray);
+
+    const expectedGridArray = [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ];
+    expect(testGrid.getGrid()).toStrictEqual(expectedGridArray);
   });
 });

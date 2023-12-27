@@ -14,10 +14,6 @@ export async function POST(request: NextRequest) {
     return Response.error;
   }
 
-  // Validate grid is valid
-
-  // Validate algorithm is valid
-
   // Generate start point
 
   const gridClass = new Grid(grid);

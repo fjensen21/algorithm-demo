@@ -12,6 +12,15 @@ class Grid {
   };
 
   constructor(inputGrid: GridSquare[][]) {
+    // Clear any existing agents
+    for (let row = 0; row < inputGrid.length; row++) {
+      for (let col = 0; col < inputGrid[0].length; col++) {
+        if (inputGrid[row][col] === 2) {
+          inputGrid[row][col] = 0;
+        }
+      }
+    }
+
     this.grid = inputGrid;
   }
 
