@@ -10,16 +10,18 @@ interface BoxProps {
 
 const Box: React.FC<BoxProps> = ({ boxType }) => {
   if (boxType == 0) {
-    return <div className="border inline-block p-2 w-2 h-2"></div>;
+    return <div className="inline-block p-2 w-2 h-2"></div>;
   } else if (boxType == 1) {
-    return <div className="border inline-block p-2 w-2 h-2 bg-green-600"></div>;
+    return <div className="inline-block p-2 w-2 h-2 bg-green-600"></div>;
   }
-  return <div className="border inline-block p-2 w-2 h-2 bg-red-600"></div>;
+  return (
+    <div className="inline-block p-2 w-2 h-2 bg-red-600 rounded-full"></div>
+  );
 };
 
 const Grid: React.FC<GridProps> = ({ arrayData }) => {
   return (
-    <div className="max-w-full overflow-auto whitespace-nowrap">
+    <div className="outline max-w-full overflow-auto whitespace-nowrap">
       {arrayData.map((row: GridSquare[], rowIndex: number) => (
         <div key={rowIndex} className="block">
           {row.map((item: GridSquare, colIndex: number) => (

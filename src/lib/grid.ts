@@ -4,7 +4,7 @@ type Direction = "right" | "left";
 
 class Grid {
   public static readonly defaultRows = 30;
-  public static readonly defaultCols = 70;
+  public static readonly defaultCols = 80;
   public grid: GridSquare[][];
   private agentPosition: { row: number | null; col: number | null } = {
     row: null,
