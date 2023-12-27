@@ -1,6 +1,5 @@
 import Grid from "@/lib/grid";
 import { OptimizationStrategy } from "../optimizationstrategy";
-import AlgorithmRegistry from "./algorithmregistry";
 import { GridSquare } from "@/types/types";
 
 export default class HillClimbing implements OptimizationStrategy {
@@ -29,5 +28,3 @@ export default class HillClimbing implements OptimizationStrategy {
     return moveHistory;
   }
 }
-
-AlgorithmRegistry.registerAlgorithm("hill-climbing", HillClimbing);
