@@ -450,7 +450,7 @@ describe("Get best neighbor", () => {
     ];
 
     const actualBestNeighbor = testGrid.getBestNeighbor();
-    console.log(actualBestNeighbor)
+    console.log(actualBestNeighbor);
 
     const isIncluded = expectedBestNeighbors.some(
       (item) =>
@@ -459,5 +459,20 @@ describe("Get best neighbor", () => {
     );
 
     expect(isIncluded).toBe(true);
+  });
+});
+
+describe("Get absolutes", () => {
+  test("Gets absolutes when terrain exists", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0],
+      [1, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 1, 1],
+    ]);
+
+    const { absoluteMax, absoluteMin } = testGrid.getAbsolutes();
+    expect(absoluteMax).toBe(3);
+    expect(absoluteMin).toBe(1);
   });
 });

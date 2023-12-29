@@ -161,6 +161,40 @@ class Grid {
     throw Error("Something unexpected happened agent position was not updated");
   }
 
+  getAbsolutes(): {
+    absoluteMin: number;
+    absoluteMax: number;
+  } {
+    let absMax;
+    let absMin;
+
+    const grid = this.getGrid();  
+
+    findMax: for (let row = 0; row < grid.length; row++) {
+      for (let col = 0; col < grid[row].length; col++) {
+        if (grid[row][col] === 1) {
+          absMax = grid.length - row;
+          break findMax;
+        }
+      }
+    }
+
+    findMin: for (let row = grid.length - 1; row >= 0; row--) {
+      for (let col = 0; col < grid[row].length; col++) {
+        if (grid[row][col] === 1) {
+          absMin = grid.length - row;
+          break findMin;
+        }
+      }
+    }
+
+    if (!(absMax && absMin)) {
+      throw Error("Invalid problem space. Must have terrain");
+    }
+
+    return { absoluteMin: absMin, absoluteMax: absMax };
+  }
+
   /**
    * Gets the neighbor with the highest score for the current agent
    *
