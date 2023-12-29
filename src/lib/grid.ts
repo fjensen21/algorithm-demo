@@ -52,9 +52,9 @@ class Grid {
    * of the grid range.
    */
   setAgentStartPosition(col: number): boolean {
-    if (this.getAgentPosition() !== null) {
-      return false;
-    }
+    // if (this.getAgentPosition() !== null) {
+    //   return false;
+    // }
     if (col < 0 || col >= this.grid[0].length) {
       return false;
     }

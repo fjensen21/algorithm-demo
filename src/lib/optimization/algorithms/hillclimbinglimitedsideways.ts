@@ -18,7 +18,7 @@ export default class HillClimbingLimitedSideways
     let bestNeighbor = problemSpace.getBestNeighbor();
     moveHistory.push(problemSpace.getGrid());
 
-    let sidewaysMoves = 50;
+    let sidewaysMoves = 15;
 
     while (
       bestNeighbor.score >=
