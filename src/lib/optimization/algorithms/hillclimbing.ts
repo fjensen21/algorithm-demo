@@ -5,7 +5,6 @@ import { GridSquare } from "@/types/types";
 export default class HillClimbing implements OptimizationStrategy {
   optimize(problemSpace: Grid): GridSquare[][][] {
     const moveHistory: GridSquare[][][] = [];
-
     const agentPosition = problemSpace.getAgentPosition();
 
     if (agentPosition === null) {
@@ -14,15 +13,16 @@ export default class HillClimbing implements OptimizationStrategy {
       );
     }
 
-    let startCol = agentPosition.col;
-    const endCol = problemSpace.getBoundary("right");
-
+    let bestNeighbor = problemSpace.getBestNeighbor();
     moveHistory.push(problemSpace.getGrid());
 
-    for (let i = startCol; i < endCol; i++) {
-      problemSpace.move("right");
-      let gridCopy = problemSpace.getGrid();
-      moveHistory.push(gridCopy);
+    while (
+      bestNeighbor.score >
+      problemSpace.evaluteState(problemSpace.getAgentPosition())
+    ) {
+      problemSpace.move(bestNeighbor.move);
+      moveHistory.push(problemSpace.getGrid());
+      bestNeighbor = problemSpace.getBestNeighbor();
     }
 
     return moveHistory;
