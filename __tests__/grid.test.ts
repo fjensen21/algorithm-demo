@@ -379,3 +379,39 @@ describe("Test getNeighborAgentPosition", () => {
     expect(nextAgentPosition).toStrictEqual(expectedPosition);
   });
 });
+
+describe("Test evaluate a state", () => {
+  test("Evaluate a standard agent state on a grid", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+    ]);
+
+    expect(testGrid.evaluteState({ row: 2, col: 2 })).toBe(3);
+    expect(testGrid.evaluteState({ row: 0, col: 2 })).toBe(5);
+    expect(testGrid.evaluteState({ row: 4, col: 2 })).toBe(1);
+  });
+
+  test("Evaluate states passed from getNeighborAgentPosition", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0, 0],
+      [1, 0, 0, 0, 0],
+      [0, 1, 0, 0, 1],
+      [0, 0, 1, 1, 0],
+      [0, 0, 0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(0);
+
+    expect(
+      testGrid.evaluteState(testGrid.getNeighborAgentPosition("left"))
+    ).toBe(-1);
+
+    expect(
+      testGrid.evaluteState(testGrid.getNeighborAgentPosition("right"))
+    ).toBe(4);
+  });
+});

@@ -167,10 +167,8 @@ class Grid {
    * @param agentPosition an agents coordinates on the problem space
    * @returns the agents score
    */
-  evaluteState(agentPosition: { col: number; row: number }): number {
-    let score = -1;
-
-    return score;
+  evaluteState(agentPosition: { col: number; row: number } | null): number {
+    return agentPosition ? this.getGrid().length - agentPosition.row : -1;
   }
 
   /**
