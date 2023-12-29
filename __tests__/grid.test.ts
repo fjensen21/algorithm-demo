@@ -289,3 +289,93 @@ describe("Constructor behaves right", () => {
     expect(testGrid.getGrid()).toStrictEqual(expectedGridArray);
   });
 });
+
+describe("Test getNeighborAgentPosition", () => {
+  test("Returns null at left boundary", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 1, 1, 0, 1],
+      [1, 0, 0, 1, 0],
+      [0, 0, 0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(0);
+
+    const nextAgentPosition = testGrid.getNeighborAgentPosition("left");
+    expect(nextAgentPosition).toBeNull();
+  });
+  test("Returns null at right boundary", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 1, 1, 0, 1],
+      [1, 0, 0, 1, 0],
+      [0, 0, 0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(4);
+
+    const nextAgentPosition = testGrid.getNeighborAgentPosition("right");
+    expect(nextAgentPosition).toBeNull();
+  });
+
+  test("Returns correct with standard movements", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 1, 1, 0, 1],
+      [1, 0, 0, 1, 0],
+      [0, 0, 0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(1);
+
+    let nextAgentPosition = testGrid.getNeighborAgentPosition("right");
+    let expectedPosition = { col: 2, row: 1 };
+    expect(nextAgentPosition).toStrictEqual(expectedPosition);
+
+    nextAgentPosition = testGrid.getNeighborAgentPosition("left");
+    expectedPosition = { col: 0, row: 2 };
+    expect(nextAgentPosition).toStrictEqual(expectedPosition);
+
+    testGrid.move("right");
+    testGrid.move("right");
+
+    nextAgentPosition = testGrid.getNeighborAgentPosition("left");
+    expectedPosition = { col: 2, row: 1 };
+    expect(nextAgentPosition).toStrictEqual(expectedPosition);
+
+    nextAgentPosition = testGrid.getNeighborAgentPosition("right");
+    expectedPosition = { col: 4, row: 1 };
+    expect(nextAgentPosition).toStrictEqual(expectedPosition);
+  });
+
+  test("Returns correct with with movements near top", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0, 0],
+      [0, 1, 1, 1, 0],
+      [1, 0, 0, 0, 1],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(0);
+
+    let nextAgentPosition = testGrid.getNeighborAgentPosition("right");
+    let expectedPosition = { col: 1, row: 0 };
+    expect(nextAgentPosition).toStrictEqual(expectedPosition);
+
+    testGrid.move("right");
+    testGrid.move("right");
+    testGrid.move("right");
+
+    nextAgentPosition = testGrid.getNeighborAgentPosition("left");
+    expectedPosition = { col: 2, row: 0 };
+    expect(nextAgentPosition).toStrictEqual(expectedPosition);
+
+    nextAgentPosition = testGrid.getNeighborAgentPosition("right");
+    expectedPosition = { col: 4, row: 1 };
+    expect(nextAgentPosition).toStrictEqual(expectedPosition);
+  });
+});

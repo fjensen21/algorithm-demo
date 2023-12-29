@@ -109,6 +109,71 @@ class Grid {
   }
 
   /**
+   * Return the coordinates for an agent if they were to move
+   * left or right
+   *
+   * @param direction the direction you want to check coordinates for
+   * @returns the coordinates for the given direction
+   */
+  getNeighborAgentPosition(direction: "right" | "left"): {
+    col: number;
+    row: number;
+  } | null {
+    let neighborCol = -1;
+    let neighborRow = -1;
+
+    // Check that we aren't at left or right boundary
+    if (
+      direction === "left" &&
+      this.getBoundary("left") === this.getAgentPosition()?.col
+    ) {
+      return null;
+    } else if (
+      direction === "right" &&
+      this.getBoundary("right") === this.getAgentPosition()?.col
+    ) {
+      return null;
+    }
+
+    let rowOffset = -2;
+    let endRowOffset = 0;
+
+    if (this.getAgentPosition()!.row === this.getBoundary("top")) {
+      endRowOffset--;
+    }
+
+    if (this.getAgentPosition()!.row === this.getBoundary("bottom")) {
+      rowOffset++;
+    }
+
+    let terrainCol =
+      direction === "right"
+        ? this.getAgentPosition()!.col + 1
+        : this.getAgentPosition()!.col - 1;
+
+    for (rowOffset; rowOffset <= endRowOffset; rowOffset++) {
+      const terrainRowToCheck = this.getAgentPosition()!.row - rowOffset;
+
+      if (this.grid[terrainRowToCheck][terrainCol] === 1) {
+        return { row: terrainRowToCheck - 1, col: terrainCol };
+      }
+    }
+    throw Error("Something unexpected happened agent position was not updated");
+  }
+
+  /**
+   * Evaluate an agent's position and return a score
+   *
+   * @param agentPosition an agents coordinates on the problem space
+   * @returns the agents score
+   */
+  evaluteState(agentPosition: { col: number; row: number }): number {
+    let score = -1;
+
+    return score;
+  }
+
+  /**
    * Move the agent one square to the left or right
    *
    * @param direction the direction you want to move the agent
