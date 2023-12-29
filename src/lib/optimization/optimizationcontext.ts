@@ -13,7 +13,7 @@ export default class OptimizationContext {
     this.strategy = strategy;
   }
 
-  executeOptimizer(problemSpace: Grid): any {
+  executeOptimizer(problemSpace: Grid): GridSquare[][][] {
     return this.strategy.optimize(problemSpace);
   }
 }

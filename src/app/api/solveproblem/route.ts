@@ -4,6 +4,7 @@ import HillClimbing from "@/lib/optimization/algorithms/hillclimbing";
 import Grid from "@/lib/grid";
 import { algorithms } from "@/lib/optimization/algorithms/algorithmregistry";
 import { GridSquare } from "@/types/types";
+import AlgorithmSimulator from "@/lib/optimization/algorithmsimulator";
 
 interface RequestPayload {
   grid: GridSquare[][];
@@ -21,25 +22,30 @@ export async function POST(request: NextRequest) {
     return Response.error;
   }
   // Generate start point
-  const gridClass = new Grid(grid);
-  gridClass.setAgentStartPosition(0);
+  // const gridClass = new Grid(grid);
+  // gridClass.setAgentStartPosition(0);
 
-  const selectedAlgorithm = new algorithms[algorithm]();
+  // const selectedAlgorithm = new algorithms[algorithm]();
 
-  const moveHistory = new OptimizationContext(
-    selectedAlgorithm
-  ).executeOptimizer(gridClass);
+  // const moveHistory = new OptimizationContext(
+  //   selectedAlgorithm
+  // ).executeOptimizer(gridClass);
 
-  const dummyPerformance = {
-    elapsedTime: 15.03,
-    absoluteMax: 5,
-    absoluteMin: 0,
-    endpoint: 4,
-  };
+  // const dummyPerformance = {
+  //   elapsedTime: 15.03,
+  //   absoluteMax: 5,
+  //   absoluteMin: 0,
+  //   endpoint: 4,
+  // };
+
+
+
+  const simulator = new AlgorithmSimulator(grid, algorithm);
+  const { moveHistory, performance } = simulator.simulate();
 
   const dummyResponse = {
     moveHistory: moveHistory,
-    performanceData: dummyPerformance,
+    performanceData: performance,
   };
 
   return NextResponse.json(dummyResponse);
