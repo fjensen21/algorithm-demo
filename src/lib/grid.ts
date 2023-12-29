@@ -162,6 +162,44 @@ class Grid {
   }
 
   /**
+   * Gets the neighbor with the highest score for the current agent
+   *
+   * @returns the best neighbor for the current agent
+   */
+  getBestNeighbor(): { move: "right" | "left"; score: number } {
+    let bestNeighbor = {
+      move: "",
+      score: 0,
+    };
+    const rightNeighborScore = this.evaluteState(
+      this.getNeighborAgentPosition("right")
+    );
+    const leftNeighborScore = this.evaluteState(
+      this.getNeighborAgentPosition("left")
+    );
+
+    if (rightNeighborScore < leftNeighborScore) {
+      bestNeighbor["move"] = "left";
+      bestNeighbor["score"] = leftNeighborScore;
+    } else if (rightNeighborScore > leftNeighborScore) {
+      bestNeighbor["move"] = "right";
+      bestNeighbor["score"] = rightNeighborScore;
+    } else {
+      const randomNum = Math.random();
+      if (randomNum > 0.49) {
+        bestNeighbor["move"] = "left";
+        bestNeighbor["score"] = leftNeighborScore;
+      } else {
+        bestNeighbor["move"] = "right";
+        bestNeighbor["score"] = rightNeighborScore;
+      }
+    }
+
+    //@ts-ignore
+    return bestNeighbor;
+  }
+
+  /**
    * Evaluate an agent's position and return a score
    *
    * @param agentPosition an agents coordinates on the problem space

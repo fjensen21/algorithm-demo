@@ -415,3 +415,49 @@ describe("Test evaluate a state", () => {
     ).toBe(4);
   });
 });
+
+describe("Get best neighbor", () => {
+  test("Gets best neighbor near a wall", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0, 0],
+      [1, 0, 0, 0, 0],
+      [0, 1, 0, 0, 1],
+      [0, 0, 1, 1, 0],
+      [0, 0, 0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(0);
+
+    const expectedBestNeighbor = { move: "right", score: 4 };
+
+    expect(testGrid.getBestNeighbor()).toStrictEqual(expectedBestNeighbor);
+  });
+
+  test("Gets random neighbor with two equal neighbors", () => {
+    const testGrid = new Grid([
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [1, 0, 0, 0, 1],
+      [0, 1, 1, 1, 0],
+      [0, 0, 0, 0, 0],
+    ]);
+
+    testGrid.setAgentStartPosition(2);
+
+    const expectedBestNeighbors = [
+      { move: "right", score: 3 },
+      { move: "left", score: 3 },
+    ];
+
+    const actualBestNeighbor = testGrid.getBestNeighbor();
+    console.log(actualBestNeighbor)
+
+    const isIncluded = expectedBestNeighbors.some(
+      (item) =>
+        item.move === actualBestNeighbor.move &&
+        item.score === actualBestNeighbor.score
+    );
+
+    expect(isIncluded).toBe(true);
+  });
+});
