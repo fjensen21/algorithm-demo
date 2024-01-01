@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       error: "Bad Request",
       message: "The request body is missing data or empty",
     };
-    return NextResponse.error;
+    throw Error(responseInfo.message);
   }
   // Generate start point
   // const gridClass = new Grid(grid);
