@@ -79,5 +79,6 @@ export default class SimulatedAnnealing implements OptimizationStrategy {
         }
       }
     }
+    return moveHistory;
   }
 }
