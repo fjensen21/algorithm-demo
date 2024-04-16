@@ -23,7 +23,7 @@ const getDefaultGrid = (): GridSquare[][] => {
   return array2D;
 };
 
-const page = () => {
+const HomePage = () => {
   const [running, setRunning] = useState(false);
 
   const [availableAlgorithms, setAvailableAlgorithms] = useState<
