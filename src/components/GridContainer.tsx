@@ -45,7 +45,7 @@ const GridContainer: React.FC = () => {
     const sleep = (delay: number) =>
       new Promise((resolve) => setTimeout(resolve, delay));
     for (let i = 0; i < moveHistory.length; i++) {
-      await sleep(200);
+      await sleep(50);
       setGridArray(moveHistory[i]);
     }
   };

@@ -38,8 +38,6 @@ export async function POST(request: NextRequest) {
   //   endpoint: 4,
   // };
 
-
-
   const simulator = new AlgorithmSimulator(grid, algorithm);
   const { moveHistory, performance } = simulator.simulate();
 
