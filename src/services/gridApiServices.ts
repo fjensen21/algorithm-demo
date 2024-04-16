@@ -4,7 +4,7 @@ export async function getNewProblemSpace() {
   try {
     const res = await fetch("/api/generateproblemspace", { cache: "no-store" });
     const data = await res.json();
-
+    console.log("Got new data");
     return data.grid;
   } catch (error) {
     console.error("Error fetching data", error);
