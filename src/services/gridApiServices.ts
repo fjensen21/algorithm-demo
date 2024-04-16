@@ -2,7 +2,7 @@ import { GridSquare } from "../types/types";
 
 export async function getNewProblemSpace() {
   try {
-    const res = await fetch("/api/generateproblemspace");
+    const res = await fetch("/api/generateproblemspace", { cache: "no-store" });
     const data = await res.json();
 
     return data.grid;
@@ -26,6 +26,7 @@ export async function getAlgorithms() {
 export async function solveProblem(grid: GridSquare[][], algorithm: string) {
   try {
     const res = await fetch("/api/solveproblem", {
+      cache: "no-store",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
