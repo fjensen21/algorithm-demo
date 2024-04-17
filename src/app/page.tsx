@@ -10,8 +10,8 @@ import { GridSquare } from "@/types/types";
 import { FormEvent, useEffect, useState } from "react";
 
 const getDefaultGrid = (): GridSquare[][] => {
-  const rows = 80;
-  const cols = 30;
+  const rows = 30;
+  const cols = 80;
   const array2D = new Array(rows);
 
   for (let i = 0; i < rows; i++) {

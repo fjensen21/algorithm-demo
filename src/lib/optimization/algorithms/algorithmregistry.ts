@@ -33,6 +33,6 @@ export const algorithmInfo = [
   {
     name: "simulated-annealing",
     description:
-      "!!Experimental!! This is the description for simulated annealing",
+      "!! Experimental: Cooling function in BETA !! Simulated annealing gradually refines solutions by probabilistically accepting worse ones to escape local optima, while hill climbing with random restarts aggressively explores by repeatedly starting from random points to find the global optimum.",
   },
 ];
