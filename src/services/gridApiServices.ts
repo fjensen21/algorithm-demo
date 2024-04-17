@@ -4,9 +4,7 @@ export async function getNewProblemSpace() {
   try {
     const res = await fetch(
       `/api/generateproblemspace?u=${Date.now().toString()}`,
-      {
-        next: { revalidate: 0 },
-      }
+      { cache: "no-store" }
     );
     const data = await res.json();
     console.log("Got new data");

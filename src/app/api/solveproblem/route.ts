@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { NextRequest, NextResponse } from "next/server";
 import OptimizationContext from "@/lib/optimization/optimizationcontext";
 import HillClimbing from "@/lib/optimization/algorithms/hillclimbing";
