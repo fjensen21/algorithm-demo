@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import Grid from "@/lib/grid";
 import { NextRequest, NextResponse } from "next/server";
 

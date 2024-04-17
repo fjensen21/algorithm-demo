@@ -31,7 +31,7 @@ export async function getAlgorithms() {
 export async function solveProblem(grid: GridSquare[][], algorithm: string) {
   try {
     const res = await fetch(`/api/solveproblem?u=${Date.now().toString()}`, {
-      next: { revalidate: 0 },
+      cache: "no-store",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
