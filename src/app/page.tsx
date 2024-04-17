@@ -111,8 +111,8 @@ const HomePage = () => {
   return (
     <div className="m-4">
       <h1 className="text-4xl m-4">Local Optimization Algorithms Simulator</h1>
-      <div className="grid grid-cols-3 h-screen">
-        <div id="grid" className="col-span-2">
+      <div className="md:grid grid-cols-3 h-screen">
+        <div id="grid" className="h-1/4 md:h-auto md:col-span-2">
           <GridCanvas grid={currentGrid} />
         </div>
         <div id="side-menu" className="col-span-1 mx-4">
