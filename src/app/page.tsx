@@ -184,21 +184,6 @@ const HomePage = () => {
                       </tr>
                       {/* row 2 */}
                       <tr>
-                        <td className="text-xl">Absolute Max Point</td>
-                        <td className="text-xl">{performance.absoluteMax}</td>
-                      </tr>
-                      {/* row 3 */}
-                      <tr>
-                        <td className="text-xl">Absolute Min Point</td>
-                        <td className="text-xl">{performance.absoluteMin}</td>
-                      </tr>
-                      {/* row 4 */}
-                      <tr>
-                        <td className="text-xl">End Point</td>
-                        <td className="text-xl">{performance.endpoint}</td>
-                      </tr>
-                      {/* row 5 */}
-                      <tr>
                         <td className="text-xl">Distance from Top</td>
                         <td className="text-xl">
                           {(
@@ -207,6 +192,21 @@ const HomePage = () => {
                           ).toFixed(2)}
                           %
                         </td>
+                      </tr>
+                      {/* row 3 */}
+                      <tr>
+                        <td className="text-xl">End Point</td>
+                        <td className="text-xl">{performance.endpoint}</td>
+                      </tr>
+                      {/* row 4 */}
+                      <tr>
+                        <td className="text-xl">Absolute Max Point</td>
+                        <td className="text-xl">{performance.absoluteMax}</td>
+                      </tr>
+                      {/* row 5 */}
+                      <tr>
+                        <td className="text-xl">Absolute Min Point</td>
+                        <td className="text-xl">{performance.absoluteMin}</td>
                       </tr>
                     </tbody>
                   </table>
