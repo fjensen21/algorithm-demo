@@ -23,7 +23,7 @@ export const algorithmInfo = [
   {
     name: "hill-climbing-limited-sideways-moves",
     description:
-      "Improves on Hill Climbing by allowing sideways moves. This gives the agent an opportunity to exit a local max. Sideways moves must be limited in order to prevent an infinite loop on plateaus.",
+      "Improves on Hill Climbing by allowing sideways moves. This gives the agent an opportunity to move upwards from a shoulder. Sideways moves must be limited in order to prevent an infinite loop on plateaus.",
   },
   {
     name: "hill-climbing-random-restarts",
